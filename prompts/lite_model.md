@@ -26,4 +26,3 @@ You have access to functions to get context, manage memory, and escalate complex
 - Example: User asks "how do I configure a Kraken X60 with motion magic?"
   - Correct call: `think_harder{"user_query": "how do I configure a Kraken X60 with motion magic?"}`
   - Incorrect call: `think_harder{"problem_description": "user needs help with a motor"}`
-  - 
