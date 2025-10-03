@@ -1,7 +1,6 @@
 # The LAW
 
-A Discord bot for managing student verification and role assignment for Lane Tech Teams 4645 & 4863.
-
+A Discord bot for managing student verification and role assignment for Lane Tech's FRC Teams 4645 & 4863.
 
 ## Setup
 
@@ -32,7 +31,7 @@ A Discord bot for managing student verification and role assignment for Lane Tec
    python main.py
    ```
 
-## creating new cogs
+## Creating New Cogs
 
 Use the template in `cogs/template.py` as a starting point:
 
