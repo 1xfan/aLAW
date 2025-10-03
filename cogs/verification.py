@@ -51,7 +51,7 @@ class VerificationModal(Modal, title="Verify Your Identity"):
                                         name_input: str, email_input: str, 
                                         reason: str) -> None:
         """Handle verification failure with consistent error messaging"""
-        embed = self.create_error_embed("Verification Failed", "We couldn't find you on the roster.")
+        embed = self.create_error_embed("Verification Failed", "I couldn't find you on the roster.")
         await interaction.response.send_message(embed=embed, ephemeral=True)
         await log_attempt(self.bot, interaction, f"{name_input} ({email_input})", f"Attempt failed: {reason}", success=False)
 
@@ -79,7 +79,7 @@ class VerificationModal(Modal, title="Verify Your Identity"):
         
         # apply roles
         if roles_to_add:
-            await member.add_roles(*roles_to_add, reason="Verified via bot")
+            await member.add_roles(*roles_to_add, reason="Verified via LAW")
         
         # set nickname
         nickname = student_data['original_name']
@@ -88,7 +88,7 @@ class VerificationModal(Modal, title="Verify Your Identity"):
             await member.edit(nick=nickname)
             nickname_status = f" Your nickname has been set to **{nickname}**."
         except discord.Forbidden:
-            nickname_status = " Could not set your nickname due to permissions."
+            nickname_status = " Could not set your nickname due to insufficient permissions."
         
         return roles_added_names, nickname_status
 
@@ -116,7 +116,7 @@ class VerificationModal(Modal, title="Verify Your Identity"):
         # look up student by email
         student_data = self._find_student_by_email(email_input)
         if not student_data:
-            return await self.handle_verification_failure(interaction, name_input, email_input, "Email not found in the roster.")
+            return await self.handle_verification_failure(interaction, name_input, email_input, "Email not found on the roster.")
 
         # verify name matches
         if student_data['original_name'].lower() != lower_name:
@@ -155,9 +155,9 @@ class VerificationModal(Modal, title="Verify Your Identity"):
         if roles_added_names:
             roles_list = ', '.join(roles_added_names)
             role_word = "role" if len(roles_added_names) == 1 else "roles"
-            message = f"✅ Success! We're glad to have you here. We've given you the following {role_word}: {roles_list}. If you think something is missing, please message an admin."
+            message = f"✅ Success! We're glad to have you here. I've given you the following {role_word}: {roles_list}. If you think something is missing, please message a server admin."
         else:
-            message = "✅ Success! We're glad to have you here. If you think something is missing, please message an admin."
+            message = "✅ Success! We're glad to have you here. If you think something is missing, please message a server admin."
         
         await interaction.response.send_message(f"{message}{nickname_status}", ephemeral=True)
 
